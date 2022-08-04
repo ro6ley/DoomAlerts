@@ -1,4 +1,6 @@
 use egg_mode::{tweet::user_timeline, tweet::Timeline, user::UserID, Token};
+use leptess::LepTess;
+use std::borrow::Cow::Borrowed;
 
 
 async fn fetch_image(url: &str) -> Option<String> {
@@ -7,7 +9,7 @@ async fn fetch_image(url: &str) -> Option<String> {
 }
 
 fn extract_from_mem(img_buffer: &[u8]) -> String {
-    let mut lt = leptess::LepTess::new(None, "eng").unwrap();
+    let mut lt = LepTess::new(None, "eng").unwrap();
     lt.set_image_from_mem(img_buffer).unwrap();
 
     String::from(lt.get_utf8_text().unwrap())
@@ -16,7 +18,7 @@ fn extract_from_mem(img_buffer: &[u8]) -> String {
 pub async fn fetch_tweets(token: Token, username: &'static str) {
     println!("\nFetching {}'s latest tweets... ", username);
 
-    let user_id: UserID = UserID::ScreenName(std::borrow::Cow::Borrowed(username));
+    let user_id: UserID = UserID::ScreenName(Borrowed(username));
     // ? filter using keywords
     let timeline: Timeline = user_timeline(user_id, false, false, &token).with_page_size(200);
 
