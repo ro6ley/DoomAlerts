@@ -1,0 +1,13 @@
+[package]
+name = "doom_alerts"
+version = "0.1.0"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+leptess = "0.13.2"
+egg-mode = "0.16"
+tokio = { version = "1", features = ["full"] }
+reqwest = "0.11.11"
+image = "0.24.3"
