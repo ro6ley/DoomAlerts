@@ -1,7 +1,8 @@
-mod doom_alerts;
-
 use std::env;
-use egg_mode::{KeyPair, Token};
+
+use egg_mode::{auth, KeyPair, Token};
+
+use doom_alerts;
 
 
 #[tokio::main]
@@ -11,7 +12,7 @@ async fn main() {
 
     let con_token: KeyPair = KeyPair::new(api_key, api_key_secret);
     // TODO: Access variant of the Token enum instead of the Bearer variant.
-    let token: Token = egg_mode::auth::bearer_token(&con_token).await.unwrap();
+    let token: Token = auth::bearer_token(&con_token).await.unwrap();
 
     doom_alerts::fetch_tweets(token, "KenyaPower_care").await;
 }
