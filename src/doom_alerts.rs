@@ -1,12 +1,12 @@
 use egg_mode::{tweet::user_timeline, tweet::Timeline, user::UserID, Token};
 
 
-pub async fn fetch_image(url: &str) -> Option<String> {
+async fn fetch_image(url: &str) -> Option<String> {
     let img_bytes = reqwest::get(url).await.unwrap().bytes().await.unwrap();
     Some(extract_from_mem(&img_bytes))
 }
 
-pub fn extract_from_mem(img_buffer: &[u8]) -> String {
+fn extract_from_mem(img_buffer: &[u8]) -> String {
     let mut lt = leptess::LepTess::new(None, "eng").unwrap();
     lt.set_image_from_mem(img_buffer).unwrap();
 

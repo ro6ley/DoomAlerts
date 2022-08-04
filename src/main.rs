@@ -1,8 +1,8 @@
-use std::env;
+mod doom_alerts;
 
+use std::env;
 use egg_mode::{KeyPair, Token};
 
-use doom_alerts;
 
 #[tokio::main]
 async fn main() {
