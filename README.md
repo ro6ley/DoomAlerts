@@ -26,6 +26,50 @@ It should work much like the NASA emails when the ISS is going to be in your are
   - Email
   - Mention on tweet?
 
+### Samples
+
+Input sample image: ![](./tests/test_2.png)
+
+OCR'd text:
+```
+AREA: WHOLE OF UTAWALAFEEDER, DATE: Tuesday 08.03.2022 TIME: 9.00 A.M.—5.00P.M.
+
+Parts of Eastern Bypass, Ruai Tuskys Supermarket, Triple O Hotel, Bakri Petrol Stn, Fahari Hotel, Komarock Medical Services Hosp, St. Bhakita Hosp, Oil Libya
+Petrol Stn, Benedicta Hosp, Parts of Mihango Est, Utawala Shopping Centre, Kinka Est, Parts of Githunguri Rd, Maji ya Ngilu, Tamarind Estate, Zebra Est, MC
+Estate & adjacent customers.
+
+AREA: KITUI ROAD DATE: Tuesday 08.03.2022 TIME: 9.00 A.M.- 5D0P.M.
+
+Legend, Kyeni, Kaseve, Kalumoni, Kaani, Kinthangathini, Vyulya, Masii, Muthetheni, Makutano Mwela, Mwala, Kivandini, Mbiuni, Yathui, kalaase, Tulila,
+Wamunyu, Katangi, Syokisinga, Ikombe, Seku University, Kyua & adjacent customers.
+
+AREA: HIRUMBI MARKET. DATE: Tuesday 08.03.2022 TIME: 9.00 A.M.—2.00P.M.
+
+Bukhulunya Mkt, Hirumbi Mkt & adjacent customers.
+
+AREA: MAKONGENI, GOT RABUOR, NGEGU DATE: Tuesday 08.03.2022 TIME: 10.00 A.M. - 3.00 P.M.
+
+Ohero, Omoya, Akili Pri Sch, Baracuda Hotel, Lwaho Pri Sch, Mariwa, Ndiru Mkt, Omoche, Manyatta, Luore, God Ponge, Onyege Mkt & adjacent customers.
+```
+
+Formatted outage information snippet:
+```
+No region details found.
+
+No county details found.
+
+AREA: WHOLE OF UTAWALAFEEDER, 
+
+DAY: Tuesday 08.03.2022
+
+START: 9.00 A.M.
+
+END: 5.00 P.M.
+
+LOCATIONS: Parts of Eastern Bypass, Ruai Tuskys Supermarket, Triple O Hotel, Bakri Petrol Stn, Fahari Hotel, Komarock Medical Services Hosp, St. Bhakita Hosp, Oil Libya
+Petrol Stn, Benedicta Hosp, Parts of Mihango Est, Utawala Shopping Centre, Kinka Est, Parts of Githunguri Rd, Maji ya Ngilu, Tamarind Estate, Zebra Est, MC
+Estate & adjacent customers.
+```
 
 ## Getting Started
 
