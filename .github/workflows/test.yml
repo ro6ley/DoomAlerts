@@ -17,7 +17,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: cargo clippy
-      run: cargo clippy --all -- -D warnings
+      run: |
+        sudo apt-get install -y tesseract-ocr
+        cargo clippy --all -- -D warnings
   
   test:
     name: cargo test
@@ -25,4 +27,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: cargo test
-      run: cargo test
+      run: |
+        sudo apt-get install -y tesseract-ocr
+        cargo test
