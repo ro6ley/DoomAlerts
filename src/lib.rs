@@ -19,21 +19,56 @@ pub struct Outage {
 
 impl Display for Outage {
     fn fmt(&self, f: &mut Formatter) -> Result {
-        write!(f, "REGION: {}\n", self.region.as_ref().unwrap_or(&"No region details found.".to_string()))?;
-        write!(f, "COUNTY: {}\n", self.county.as_ref().unwrap_or(&"No county details found.".to_string()))?;
-        write!(f, "AREA: {}\n", self.area.as_ref().unwrap_or(&"No area details found.".to_string()))?;
-        write!(f, "DATE: {} ({} - {})\n", self.date.as_ref().unwrap_or(&"No date details found.".to_string()), self.start_time.as_ref().unwrap_or(&"N/A".to_string()),  self.end_time.as_ref().unwrap_or(&"N/A".to_string()))?;
-        write!(f, "LOCATIONS: {}", self.locations.as_ref().unwrap_or(&"No affected locations details found.".to_string()))?;
-        write!(f, "\n---------------------------------------------------------")
+        writeln!(
+            f,
+            "REGION: {}",
+            self.region
+                .as_ref()
+                .unwrap_or(&"No region details found.".to_string())
+        )?;
+        writeln!(
+            f,
+            "COUNTY: {}",
+            self.county
+                .as_ref()
+                .unwrap_or(&"No county details found.".to_string())
+        )?;
+        writeln!(
+            f,
+            "AREA: {}",
+            self.area
+                .as_ref()
+                .unwrap_or(&"No area details found.".to_string())
+        )?;
+        writeln!(
+            f,
+            "DATE: {} ({} - {})",
+            self.date
+                .as_ref()
+                .unwrap_or(&"No date details found.".to_string()),
+            self.start_time.as_ref().unwrap_or(&"N/A".to_string()),
+            self.end_time.as_ref().unwrap_or(&"N/A".to_string())
+        )?;
+        writeln!(
+            f,
+            "LOCATIONS: {}",
+            self.locations
+                .as_ref()
+                .unwrap_or(&"No affected locations details found.".to_string())
+        )?;
+        writeln!(
+            f,
+            "---------------------------------------------------------"
+        )
     }
 }
 
 impl Outage {
     pub fn includes_location(&self, location: &str) -> bool {
         if let Some(l) = &self.locations {
-            return l.contains(location)
+            return l.contains(location);
         }
-        return false
+        false
     }
 }
 
@@ -80,14 +115,14 @@ fn extract_from_mem(img_buffer: &[u8]) -> String {
     let mut lt = LepTess::new(None, "eng").unwrap();
     lt.set_image_from_mem(img_buffer).unwrap();
 
-    String::from(lt.get_utf8_text().unwrap())
+    lt.get_utf8_text().unwrap()
 }
 
 pub fn extract_from_path(location: &str) -> String {
     let mut lt: LepTess = leptess::LepTess::new(None, "eng").unwrap();
     lt.set_image(location).unwrap();
 
-    String::from(lt.get_utf8_text().unwrap())
+    lt.get_utf8_text().unwrap()
 }
 
 /// Using regex, extract outage information from the text extracted from image
