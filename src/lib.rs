@@ -2,20 +2,18 @@
 
 use egg_mode::{tweet::user_timeline, tweet::Timeline, user::UserID, Token};
 use leptess::LepTess;
-use regex::{Match, Regex};
+use regex::Regex;
 use std::borrow::Cow::Borrowed;
 
-struct Outage<'a> {
-    region: &'a str,
-    county: &'a str,
-    date: &'a str,
-    time: &'a str,
-    locations: &'a str,
-}
-
-// TODO: implement IncludesLocation for Outage
-trait IncludesLocation {
-    fn includes_location(&self, location: &str);
+#[derive(Debug, Default)]
+struct Outage {
+    region: Option<String>,
+    county: Option<String>,
+    area: Option<String>,
+    date: Option<String>,
+    start_time: Option<String>,
+    end_time: Option<String>,
+    locations: Option<String>,
 }
 
 pub async fn fetch_tweets(token: Token, username: &'static str) {
@@ -66,90 +64,94 @@ fn extract_from_mem(img_buffer: &[u8]) -> String {
 
 /// Using regex, extract outage information from the text extracted from image
 fn parse_text(text: &str) {
-    let re: Regex = Regex::new(r"(?mi)^(?P<region>[a-z\s]*\s*region\b)?\s*(\bparts\sof\s(?P<county>[a-z\s]*\scounty\b))?\s*(\barea:?)\s*\b(?P<area>[a-z\s,\.]*)(\bdate:?)\s*\b(?P<day>[a-z]*)\b\s*(?P<date>[\d\.]*)\b\s*(\btime:?)\s*\b(?P<start>[\d\.]*)\b\s*\b(?P<start_period>[ap]\.m\.)\s*[-—]*\s*\b(?P<end>[\d\.]*)\s*(?P<end_period>[ap]\.m\.)\s*\b(?P<locations>[a-z0-9&,\s\.]*)\n").unwrap();
+    let re: Regex = Regex::new(r"(?mi)^(?P<region>[a-z\s]*\s*region\b)?\s*(\bparts\sof\s(?P<county>[a-z\s]*\scounty\b))?\s*(\barea:?)\s*\b(?P<area>[a-z\s,\.]*)(\bdate:?)\s*\b(?P<day>[a-z]*)\b\s*(?P<date>[\d\.]*)\b\s*(\btime:?)\s*\b(?P<start>[\d\.]*)\b\s*\b(?P<start_period>[ap]\.m\.)\s*[-—]*\s*\b(?P<end>[\d\.]*)\s*(?P<end_period>[ap]\.m\.)\s*\b(?P<locations>[a-z0-9&,\s\.]*)\n")
+        .unwrap();
 
     for captures in re.captures_iter(text) {
-        let region: Option<Match> = captures.name("region");
-        let county: Option<Match> = captures.name("county");
-        let area: Option<Match> = captures.name("area");
-        let day: Option<Match> = captures.name("day");
-        let date: Option<Match> = captures.name("date");
+        let mut outage = Outage::default();
 
-        let start_time: Option<Match> = captures.name("start");
-        let start_time_period: Option<Match> = captures.name("start_period");
-        let end_time: Option<Match> = captures.name("end");
-        let end_time_period: Option<Match> = captures.name("end_period");
-        let locations: Option<Match> = captures.name("locations");
-
-        match region {
+        match captures.name("region") {
             Some(n) => {
                 println!("REGION: {}", n.as_str());
+                outage.region = Some(n.as_str().to_string());
             }
             _ => {
                 println!("No region details found.");
             }
         }
 
-        match county {
+        match captures.name("county") {
             Some(n) => {
                 println!("COUNTY: {}", n.as_str());
+                outage.county = Some(n.as_str().to_string());
             }
             _ => {
                 println!("No county details found.");
             }
         }
 
-        match area {
+        match captures.name("area") {
             Some(n) => {
                 println!("AREA: {}", n.as_str());
+                outage.area = Some(n.as_str().to_string());
             }
             _ => {
                 println!("No area details found.");
             }
         }
 
-        match day {
+        match captures.name("day") {
             Some(n) => {
-                if let Some(d) = date {
-                    println!("DAY: {} - {}", n.as_str(), d.as_str());
+                if let Some(d) = captures.name("date") {
+                    let d_str = format!("{} {}", n.as_str(), d.as_str());
+                    println!("DAY: {}", &d_str);
+                    outage.date = Some(d_str);
                 } else {
                     println!("DAY: {}", n.as_str());
+                    outage.date = Some(n.as_str().to_string());
                 }
             }
             _ => {
-                println!("No area details found.");
+                println!("No date details found.");
             }
         }
 
-        match start_time {
+        match captures.name("start") {
             Some(n) => {
-                if let Some(t) = start_time_period {
-                    println!("START: {} {}", n.as_str(), t.as_str());
+                if let Some(t) = captures.name("start_period") {
+                    let t_str = format!("{} {}", n.as_str(), t.as_str());
+                    println!("START: {}", &t_str);
+                    outage.start_time = Some(t_str);
                 } else {
                     println!("START: {}", n.as_str());
+                    outage.start_time = Some(n.as_str().to_string());
                 }
             }
             _ => {
-                println!("No area details found.");
+                println!("No start time details found.");
             }
         }
 
-        match end_time {
+        match captures.name("end") {
             Some(n) => {
-                if let Some(t) = end_time_period {
-                    println!("END: {} {}", n.as_str(), t.as_str());
+                if let Some(t) = captures.name("end_period") {
+                    let t_str = format!("{} {}", n.as_str(), t.as_str());
+                    println!("END: {}", &t_str);
+                    outage.end_time = Some(t_str);
                 } else {
                     println!("END: {}", n.as_str());
+                    outage.end_time = Some(n.as_str().to_string());
                 }
             }
             _ => {
-                println!("No area details found.");
+                println!("No end time details found.");
             }
         }
 
-        match locations {
+        match captures.name("locations") {
             Some(n) => {
                 println!("LOCATIONS: {}", n.as_str());
+                outage.locations = Some(n.as_str().to_string());
             }
             _ => {
                 println!("No location details found.");
