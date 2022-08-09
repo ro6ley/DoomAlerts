@@ -1,4 +1,5 @@
 # DoomAlerts
+[![Build & Test](https://github.com/ro6ley/DoomAlerts/actions/workflows/test.yml/badge.svg)](https://github.com/ro6ley/DoomAlerts/actions/workflows/test.yml)
 
 If KPLC is scheduled to do full-day maintenance in my area, let me know in advance!
 
