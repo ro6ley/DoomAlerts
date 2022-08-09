@@ -28,7 +28,7 @@ It should work much like the NASA emails when the ISS is going to be in your are
 
 ### Samples
 
-Input sample image: ![](./tests/test_2.png)
+Input sample image: ![](./tests/images/test_2.png)
 
 OCR'd text:
 ```
@@ -54,18 +54,10 @@ Ohero, Omoya, Akili Pri Sch, Baracuda Hotel, Lwaho Pri Sch, Mariwa, Ndiru Mkt, O
 
 Formatted outage information snippet:
 ```
-No region details found.
-
-No county details found.
-
+REGION: No region details found.
+COUNTY: No county details found.
 AREA: WHOLE OF UTAWALAFEEDER, 
-
-DAY: Tuesday 08.03.2022
-
-START: 9.00 A.M.
-
-END: 5.00 P.M.
-
+DATE: Tuesday 08.03.2022 (9.00 A.M. - 5.00 P.M.)
 LOCATIONS: Parts of Eastern Bypass, Ruai Tuskys Supermarket, Triple O Hotel, Bakri Petrol Stn, Fahari Hotel, Komarock Medical Services Hosp, St. Bhakita Hosp, Oil Libya
 Petrol Stn, Benedicta Hosp, Parts of Mihango Est, Utawala Shopping Centre, Kinka Est, Parts of Githunguri Rd, Maji ya Ngilu, Tamarind Estate, Zebra Est, MC
 Estate & adjacent customers.
@@ -99,6 +91,11 @@ The following environment variables are needed to be set when running the projec
 * start the application:
   ```bash
   $ cargo run
+  ```
+
+* run tests:
+  ```bash
+  $ cargo test
   ```
 
 ### Running in Docker
