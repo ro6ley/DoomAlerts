@@ -18,7 +18,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: cargo clippy
       run: |
-        sudo apt-get install -y tesseract-ocr
+        sudo apt-get install -y libleptonica-dev libtesseract-dev clang tesseract-ocr-eng
         cargo clippy --all -- -D warnings
   
   test:
@@ -28,5 +28,5 @@ jobs:
     - uses: actions/checkout@v2
     - name: cargo test
       run: |
-        sudo apt-get install -y tesseract-ocr
+        sudo apt-get install -y libleptonica-dev libtesseract-dev clang tesseract-ocr-eng
         cargo test
