@@ -6,7 +6,7 @@ mod tests {
     fn test_text_extracted() {
         let img_text = doom_alerts::extract_from_path(TEST_IMAGE);
         assert!(img_text.starts_with(
-            "AREA: WHOLE OF UTAWALAFEEDER, DATE: Tuesday 08.03.2022 TIME: 9.00 A.M.—5.00P.M."
+            "AREA: WHOLE OF UTAWALAFEEDER,"
         ))
     }
 
