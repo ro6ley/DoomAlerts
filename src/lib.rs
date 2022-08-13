@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-
 use egg_mode::{tweet::user_timeline, tweet::Timeline, user::UserID, Token};
 use leptess::LepTess;
 use regex::Regex;
@@ -72,7 +70,7 @@ impl Outage {
     }
 }
 
-pub async fn fetch_tweets(token: Token, username: &'static str) {
+pub async fn fetch_tweets(token: Token, username: &'static str) -> () {
     println!("\nFetching {}'s latest tweets... ", username);
 
     let user_id: UserID = UserID::ScreenName(Borrowed(username));
@@ -127,7 +125,7 @@ pub fn extract_from_path(location: &str) -> String {
 
 /// Using regex, extract outage information from the text extracted from image
 pub fn parse_text(text: &str) -> Vec<Outage> {
-    let re: Regex = Regex::new(r"(?mi)^(?P<region>[a-z\s]*\s*region\b)?\s*(\bparts\sof\s(?P<county>[a-z\s]*\scounty\b))?\s*(\barea:?)\s*\b(?P<area>[a-z\s,\.]*)(\bdate:?)\s*\b(?P<day>[a-z]*)\b\s*(?P<date>[\d\.]*)\b\s*(\btime:?)\s*\b(?P<start>[\d\.]*)\b\s*\b(?P<start_period>[ap]\.m\.)\s*[-—]*\s*\b(?P<end>[\d\.]*)\s*(?P<end_period>[ap]\.m\.)\s*\b(?P<locations>[a-z0-9&,\s\.]*)\n")
+    let re: Regex = Regex::new(r"(?mi)^(?P<region>[a-z\s]*\sregion)?\s*((parts\sof)?\b(?P<county>[a-z\s]*\scounty\b))?\s*(\barea:?)\s\b(?P<area>[a-z\s,\.]*)(\bdate:?)\s\b(?P<day>[a-z]*)\b\s*(?P<date>[\d\.]*)\b\s(\btime:?)\s\b(?P<start>[\d\.]*)\b\s\b(?P<start_period>[ap]\.m\.)\s*[-—]\s*\b(?P<end>[\d\.]*)\s*(?P<end_period>[ap]\.m\.)\s*(?P<locations>[a-z0-9&,\s\.]*)\n")
         .unwrap();
     let mut outages: Vec<Outage> = Vec::new();
 
