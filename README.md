@@ -88,7 +88,7 @@ The following environment variables are needed to be set when running the projec
 
 * start the application:
   ```bash
-  $ source.env 
+  $ source .env
   $ cargo run
   ```
 
