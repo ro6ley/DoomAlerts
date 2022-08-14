@@ -81,8 +81,14 @@ The following environment variables are needed to be set when running the projec
   $ cd DoomAlerts
   ```
 
+* create the `.env` file and fill in the required details:
+  ```bash
+  $ cp .env.example .env
+  ```
+
 * start the application:
   ```bash
+  $ source.env 
   $ cargo run
   ```
 
