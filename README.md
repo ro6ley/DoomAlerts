@@ -53,16 +53,6 @@ AREA: MAKONGENI, GOT RABUOR, NGEGU DATE: Tuesday 08.03.2022 TIME: 10.00 A.M. - 3
 Ohero, Omoya, Akili Pri Sch, Baracuda Hotel, Lwaho Pri Sch, Mariwa, Ndiru Mkt, Omoche, Manyatta, Luore, God Ponge, Onyege Mkt & adjacent customers.
 ```
 
-Formatted outage information snippet:
-```
-REGION: No region details found.
-COUNTY: No county details found.
-AREA: WHOLE OF UTAWALAFEEDER, 
-DATE: Tuesday 08.03.2022 (9.00 A.M. - 5.00 P.M.)
-LOCATIONS: Parts of Eastern Bypass, Ruai Tuskys Supermarket, Triple O Hotel, Bakri Petrol Stn, Fahari Hotel, Komarock Medical Services Hosp, St. Bhakita Hosp, Oil Libya
-Petrol Stn, Benedicta Hosp, Parts of Mihango Est, Utawala Shopping Centre, Kinka Est, Parts of Githunguri Rd, Maji ya Ngilu, Tamarind Estate, Zebra Est, MC
-Estate & adjacent customers.
-```
 
 ## Getting Started
 
@@ -80,6 +70,7 @@ The following environment variables are needed to be set when running the projec
 
 * `API_KEY` - as provided by Twitter on the developer portal, configuring a Twitter App as a Social App will provide it
 * `API_SECRET_KEY` - as provided by Twitter on the developer portal, configuring a Twitter App as a Social App will provide it
+* `LOCATIONS` - comma separated list of areas to be on the lookout for
 
 ### Local Development
 
