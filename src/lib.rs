@@ -63,7 +63,7 @@ pub fn extract_from_path(location: &str) -> String {
 }
 
 pub fn search(full_texts: Vec<String>, locations: String) -> tantivy::Result<bool> {
-    // abc,xyz -> abc OR xyz
+    // abc,xyz -> "abc" OR "xyz"
     let formatted_locations: String = locations
         .split(',')
         .map(|s| format!("\"{}\"", s))
