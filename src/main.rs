@@ -1,10 +1,7 @@
 use std::env;
 
-mod utils;
-
 #[tokio::main]
 async fn main() {
-    utils::extract_image_text().await;
     let locations: String = env::var("LOCATIONS").expect("$LOCATIONS env var is not set");
 
     let outage_texts: Vec<String> = doom_alerts::fetch_tweets("KenyaPower_care").await;
