@@ -67,11 +67,16 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Environment Variables
 
-The following environment variables are needed to be set when running the project or Docker image:
+The following environment variables are needed to be set when running the bot:
 
 * `API_KEY` - as provided by Twitter on the developer portal, configuring a Twitter App as a Social App will provide it
 * `API_SECRET_KEY` - as provided by Twitter on the developer portal, configuring a Twitter App as a Social App will provide it
 * `LOCATIONS` - comma separated list of areas to be on the lookout for
+* `EMAIL_USERNAME`
+* `EMAIL_PASSWORD`
+* `EMAIL_SMTP_HOST`
+* `EMAIL_RECIPIENT`
+
 
 ### Local Development
 
