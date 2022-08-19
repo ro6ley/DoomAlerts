@@ -1,31 +1,18 @@
 # DoomAlerts
 [![Build & Test](https://github.com/ro6ley/DoomAlerts/actions/workflows/test.yml/badge.svg)](https://github.com/ro6ley/DoomAlerts/actions/workflows/test.yml)
 
-If KPLC is scheduled to do full-day maintenance in my area, let me know in advance!
+A bot build in Rust to notify me in advance if KPLC is scheduled to do full-day maintenance in my area.
 
 ## Modus Operandi
 
-It should work much like the NASA emails when the ISS is going to be in your area. Sign up and configure?
+KenyaPower usually posts planned power interruption notifications on their [Twitter page (@KenyaPower_Care)](https://twitter.com/kenyapower_care) and [their website](https://www.kplc.co.ke/category/view/50/planned-power-interruptions). The frequency of notifications posted
+varies between Twitter and the website, with their Twitter page being the most up to date.
 
-* Crob job to fetch tweets periodically - everyday at 6? Every 4 hours? parse as they are posted (stream)?
+Planned power interruption notifications posted on their Twitter page are usually posted the day before the scheduled outage. They are posted as tweets that contain one or more images that contain the interruption details such as areas affected, date of the planned interruption e.t.c. Samples of the images can be found in the `tests/images` folder in this project, also see [Samples section below](#samples).
 
-* Filter for shutdown tweets - using keywords populated from previous tweet content (wordcloud of some sorts) ? filter by tweets containing images to narrow down further?
+DoomAlerts bot periodically fetches these tweets and extracts the outage information from these images using OCR.
 
-* Extract the text from images using OCR - using Leptess
-
-* Store watchlist of locations in DB - names? GPS coordinates in future for Google Maps link? breakdown by regions? zones?
-
-* Store user-customized watch list with the associated user?
-
-* For each user, compare areas on latest tweet vs the user's watchlist
-
-* If a match is found, format and send notification, if possible include original tweet
-
-* Mode of delivery:
-  - SMS
-  - Twitter DM
-  - Email
-  - Mention on tweet?
+Once the planned interuption information is extracted from these images, a search is done to look for the locations configured by the `LOCATIONS` environment variable. If a configured location is found within the text extracted from the images, an email is sent to the email address configured by the `EMAIL_RECIPIENT` environment variable.
 
 ### Samples
 
@@ -101,6 +88,13 @@ The following environment variables are needed to be set when running the bot:
   ```bash
   $ cargo test
   ```
+
+## Documentation
+
+To view the project's documentation run:
+```bash
+$ cargo doc --no-deps --open
+```
 
 ### Running in Docker
 
