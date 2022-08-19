@@ -24,9 +24,9 @@ pub async fn send_email(
         .build();
 
     let from: &str = "DoomAlerts Bot <doom@alerts.rs>";
-    let subject = format!("KPLC Scheduled Interruptions for {outage_date}");
+    let subject: String = format!("KPLC Scheduled Interruptions for {outage_date}");
 
-    let email = Message::builder()
+    let email: Message = Message::builder()
         .from(from.parse()?)
         .to(email_recipient.as_str().parse()?)
         .subject(&subject)
