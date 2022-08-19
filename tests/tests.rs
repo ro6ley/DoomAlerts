@@ -26,7 +26,7 @@ mod tests {
     #[test]
     fn test_search() {
         let image_paths: Vec<&str> = vec!["./tests/images/test_6.png", "./tests/images/test_2.png"];
-        let locations: String = String::from("Rongai,Bogani");
+        let locations: String = String::from("Nyangweso,Bogani,Mwalimu Motors");
 
         let mut outage_texts: Vec<String> = Vec::new();
 
@@ -34,7 +34,7 @@ mod tests {
             outage_texts.push(doom_alerts::extract_from_path(p));
         }
 
-        let affected = doom_alerts::search(outage_texts, locations).unwrap();
+        let affected = doom_alerts::search::search(outage_texts, locations).unwrap();
         assert_eq!(affected, true);
     }
 
@@ -49,7 +49,7 @@ mod tests {
             outage_texts.push(doom_alerts::extract_from_path(p));
         }
 
-        let affected = doom_alerts::search(outage_texts, locations).unwrap();
+        let affected = doom_alerts::search::search(outage_texts, locations).unwrap();
         assert_eq!(affected, false);
     }
 }
