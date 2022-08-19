@@ -6,7 +6,7 @@ pub struct Outage {
     region: Option<String>,
     county: Option<String>,
     area: Option<String>,
-    date: Option<String>,
+    pub date: Option<String>,
     start_time: Option<String>,
     end_time: Option<String>,
     locations: Option<String>,
@@ -69,6 +69,7 @@ impl Outage {
 
 /// Using regex, extract outage information from the text extracted from image
 pub fn parse_text(text: &str) -> Vec<Outage> {
+    // let re: Regex = Regex::new(r"(?mi)^(?P<region>[a-z\s]*\sregion)?\s*((parts\sof)?\b(?P<county>[a-z\s]*\scounty\b))?\s*(\barea:?)\s\b(?P<area>[a-z\s,\.]*)(\bdate:?)\s\b(?P<day>[a-z]*)\b\s*(?P<date>[\d\.]*)\b\s(\btime:?)\s\b(?P<start>[\d\.]*)\b\s\b(?P<start_period>[ap]\.m\.)\s*[-~—]\s*\b(?P<end>[\d\.]*)\s*(?P<end_period>[ap]\.m\.)\s*(?P<locations>[a-z0-9&,\s\.]*)\n")
     let re: Regex = Regex::new(r"(?mi)^(?P<region>[a-z\s]*\sregion)?\s*((parts\sof)?\b(?P<county>[a-z\s]*\scounty\b))?\s*(\barea:?)\s\b(?P<area>[a-z\s,\.]*)(\bdate:?)\s\b(?P<day>[a-z]*)\b\s*(?P<date>[\d\.]*)\b\s(\btime:?)\s\b(?P<start>[\d\.]*)\b\s\b(?P<start_period>[ap]\.m\.)\s*[-~—]\s*\b(?P<end>[\d\.]*)\s*(?P<end_period>[ap]\.m\.)\s*(?P<locations>[a-z0-9&,\s\.-]*)\n")
         .unwrap();
     let mut outages: Vec<Outage> = Vec::new();
@@ -123,4 +124,17 @@ pub fn parse_text(text: &str) -> Vec<Outage> {
     }
 
     outages
+}
+
+/// Go through all texts from all the outage images and return the first date found
+pub fn extract_date(outage_texts: Vec<String>) -> String {
+    for outage_text in outage_texts {
+        let outages = parse_text(&outage_text);
+        for outage in outages {
+            if let Some(date) = outage.date {
+                return date;
+            }
+        }
+    }
+    "date unavailable".to_string()
 }

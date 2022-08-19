@@ -4,7 +4,10 @@ use lettre::{
 };
 use std::env;
 
-pub async fn send_email(email_body: String) -> Result<&'static str, Box<dyn std::error::Error>> {
+pub async fn send_email(
+    email_body: String,
+    outage_date: String,
+) -> Result<&'static str, Box<dyn std::error::Error>> {
     let email_username: String =
         env::var("EMAIL_USERNAME").expect("$EMAIL_USERNAME env var is not set");
     let email_password: String =
@@ -21,14 +24,12 @@ pub async fn send_email(email_body: String) -> Result<&'static str, Box<dyn std:
         .build();
 
     let from: &str = "DoomAlerts Bot <doom@alerts.rs>";
-    let to: &str = &email_recipient;
-    // TODO: extract date
-    let subject: &str = "KPLC Scheduled interruptions for _tomorrow_";
+    let subject = format!("KPLC Scheduled Interruptions for {outage_date}");
 
     let email = Message::builder()
         .from(from.parse()?)
-        .to(to.parse()?)
-        .subject(subject)
+        .to(email_recipient.as_str().parse()?)
+        .subject(&subject)
         .body(email_body)?;
 
     mailer.send(email).await?;
