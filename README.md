@@ -1,7 +1,7 @@
 # DoomAlerts
 [![Build & Test](https://github.com/ro6ley/DoomAlerts/actions/workflows/test.yml/badge.svg)](https://github.com/ro6ley/DoomAlerts/actions/workflows/test.yml)
 
-A bot build in Rust to notify me in advance if KPLC is scheduled to do full-day maintenance in my area.
+A bot built in Rust to notify me in advance if KPLC is scheduled to do full-day maintenance in my area.
 
 ## Modus Operandi
 
