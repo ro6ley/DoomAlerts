@@ -4,7 +4,7 @@ use std::env;
 async fn main() {
     let locations: String = env::var("LOCATIONS").expect("$LOCATIONS env var is not set");
 
-    let outage_texts: Vec<String> = doom_alerts::fetch_tweets("KenyaPower_care").await;
+    let outage_texts: Vec<String> = doom_alerts::tweets::fetch_tweets("KenyaPower_care").await;
 
     let outages_date: String = doom_alerts::outages::extract_date(outage_texts.clone());
     let affected: bool = doom_alerts::search::search(outage_texts.clone(), locations).unwrap();
