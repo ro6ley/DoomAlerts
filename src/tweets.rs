@@ -1,10 +1,14 @@
-use std::borrow::Cow::Borrowed;
-use std::env;
+//! This module handles the interaction between DoomAlerts and Twitter.
+
+use std::{borrow::Cow::Borrowed, collections::HashMap, env};
 
 use egg_mode::{auth, tweet::user_timeline, tweet::Timeline, user::UserID, KeyPair, Token};
 
-// TODO: return HashMap<K: Tweet, V: Vec<String>>
-pub async fn fetch_tweets(username: &'static str) -> Vec<String> {
+/// This function fetches a users tweets and filters those with images attached.
+///
+/// It returns a hashmap with the tweet ID as the key
+/// and the value is a vector containing the texts extracted from the images attached to the tweet
+pub async fn fetch_tweets(username: &'static str) -> HashMap<u64, Vec<String>> {
     println!("\nFetching {}'s latest tweets... ", username);
 
     let api_key: String = env::var("API_KEY").expect("$API_KEY env var is not set");
@@ -17,7 +21,7 @@ pub async fn fetch_tweets(username: &'static str) -> Vec<String> {
     let user_id: UserID = UserID::ScreenName(Borrowed(username));
     let timeline: Timeline = user_timeline(user_id, false, false, &token).with_page_size(200);
 
-    let mut outage_texts: Vec<String> = Vec::new();
+    let mut interruptions: HashMap<u64, Vec<String>> = HashMap::new();
 
     let (_timeline, feed) = timeline.newer(None).await.unwrap();
     for tweet in &*feed {
@@ -29,19 +33,27 @@ pub async fn fetch_tweets(username: &'static str) -> Vec<String> {
 
         match &tweet.extended_entities {
             Some(extended_entities) => {
+                let mut interruption_texts: Vec<String> = Vec::new();
+
                 for entity in &extended_entities.media {
                     println!("Media found. Extracting text...");
 
                     let img_text: String = crate::utils::fetch_image_from_url(&entity.media_url)
                         .await
                         .unwrap();
-                    outage_texts.push(img_text);
+                    interruption_texts.push(img_text);
                 }
+                interruptions.insert(tweet.id, interruption_texts);
             }
             None => {
                 println!("Tweet has no media");
             }
         }
     }
-    outage_texts
+    interruptions
+}
+
+/// Given a tweet ID and a username, build the tweet URL to embed in the notifications
+pub fn build_tweet_link(id: u64, username: &'static str) -> String {
+    format!("twitter.com/{username}/status/{id}")
 }
