@@ -6,7 +6,7 @@ pub async fn fetch_image_from_url(url: &str) -> Option<String> {
 }
 
 fn extract_from_mem(img_buffer: &[u8]) -> String {
-    let mut lt = LepTess::new(None, "eng").unwrap();
+    let mut lt: LepTess = LepTess::new(None, "eng").unwrap();
     lt.set_image_from_mem(img_buffer).unwrap();
 
     lt.get_utf8_text().unwrap()
