@@ -8,11 +8,11 @@ A bot built in Rust to notify me in advance if KPLC is scheduled to do full-day 
 KenyaPower usually posts planned power interruption notifications on their [Twitter page (@KenyaPower_Care)](https://twitter.com/kenyapower_care) and [their website](https://www.kplc.co.ke/category/view/50/planned-power-interruptions). The frequency of notifications posted
 varies between Twitter and the website, with their Twitter page being the most up to date.
 
-Planned power interruption notifications posted on their Twitter page are usually posted the day before the scheduled outage. They are posted as tweets that contain one or more images that contain the interruption details such as areas affected, date of the planned interruption e.t.c. Samples of the images can be found in the `tests/images` folder in this project, also see [Samples section below](#samples).
+Planned power interruption notifications posted on their Twitter page are usually posted the day before the scheduled interruption. They are posted as tweets that contain one or more images that contain the interruption details such as areas affected, date of the planned interruption e.t.c. Samples of the images can be found in the `tests/images` folder in this project, also see [Samples section below](#samples).
 
-DoomAlerts bot periodically fetches these tweets and extracts the outage information from these images using OCR.
+DoomAlerts bot periodically fetches these tweets and extracts the power interruption information from these images using OCR.
 
-Once the planned interuption information is extracted from these images, a search is done to look for the locations configured by the `LOCATIONS` environment variable. If a configured location is found within the text extracted from the images, an email is sent to the email address configured by the `EMAIL_RECIPIENT` environment variable.
+Once the interuption information is extracted from these images, a search is done to look for the locations configured by the `WATCHLIST` environment variable. If an area on the watchlist is found within the text extracted from the images, an email is sent to the email address configured by the `EMAIL_RECIPIENT` environment variable.
 
 ### Samples
 
@@ -58,7 +58,7 @@ The following environment variables are needed to be set when running the bot:
 
 * `API_KEY` - as provided by Twitter on the developer portal, configuring a Twitter App as a Social App will provide it
 * `API_SECRET_KEY` - as provided by Twitter on the developer portal, configuring a Twitter App as a Social App will provide it
-* `LOCATIONS` - comma separated list of areas to be on the lookout for
+* `WATCHLIST` - comma separated list of areas to be on the lookout for
 * `EMAIL_USERNAME`
 * `EMAIL_PASSWORD`
 * `EMAIL_SMTP_HOST`
