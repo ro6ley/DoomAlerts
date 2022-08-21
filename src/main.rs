@@ -9,9 +9,11 @@ async fn main() {
 
     for (id, interruption_texts) in &interruptions {
         let interruption_date: String =
-            doom_alerts::interruption::extract_date(interruption_texts.clone());
+            doom_alerts::interruption::extract_date(interruption_texts.clone())
+                .unwrap_or_else(|| "N/A".to_string());
         let affected: bool =
-            doom_alerts::search::search(interruption_texts.clone(), watchlist.clone()).unwrap();
+            doom_alerts::search::search(interruption_texts.clone(), watchlist.clone())
+                .unwrap_or(false);
 
         if affected {
             let tweet_link: String = doom_alerts::tweets::build_tweet_link(*id, "KenyaPower_Care");

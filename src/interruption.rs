@@ -1,8 +1,32 @@
-//! Iinterruption module
+//! Structs and functions for working with interruptions
+//!
+//! In this module, you can find structs and methods to interact with interruption
+//! metadata.
+//!
+//! ## Structs
+//!
+//! - `Interruption`: this struct represents the interruption information for a single area.
+//!   The area may be a county, sub-county e.t.c depending on the KPLC notice.
+//!
+//! ## Functions
+//!
+//! - `parse_text` - uses regex to extract interruption information from the text extracted from notice images.
+//! - `extract_date` - parses a vector of texts extracted from the interruption images and return the first date found
 
 use regex::Regex;
 use std::fmt::{Display, Formatter, Result};
 
+/// Represents the interruption details for an area.
+///
+/// ## Fields
+///
+///* `region`
+///* `county`
+///* `area`
+///* `start_time`
+///* `end_time`
+///* `locations`
+///
 #[derive(Debug, Default)]
 pub struct Interruption {
     region: Option<String>,
@@ -61,8 +85,8 @@ impl Display for Interruption {
 }
 
 impl Interruption {
-    /// Returns a boolean indicating whether the provided location will be
-    /// affected by this power supply interuption
+    /// This function returns a boolean indicating whether the provided location will be
+    /// affected by this power supply interuption.
     pub fn affects_location(&self, location: &str) -> bool {
         if let Some(l) = &self.locations {
             return l.contains(location);
@@ -71,9 +95,10 @@ impl Interruption {
     }
 }
 
-/// Using regex, extract interruption information from the text extracted from image
+/// Using regex, extract interruption information from the text extracted from image.
+///
+/// The extracted information makes up the fields on the `Interruption` struct.
 pub fn parse_text(text: &str) -> Vec<Interruption> {
-    // let re: Regex = Regex::new(r"(?mi)^(?P<region>[a-z\s]*\sregion)?\s*((parts\sof)?\b(?P<county>[a-z\s]*\scounty\b))?\s*(\barea:?)\s\b(?P<area>[a-z\s,\.]*)(\bdate:?)\s\b(?P<day>[a-z]*)\b\s*(?P<date>[\d\.]*)\b\s(\btime:?)\s\b(?P<start>[\d\.]*)\b\s\b(?P<start_period>[ap]\.m\.)\s*[-~—]\s*\b(?P<end>[\d\.]*)\s*(?P<end_period>[ap]\.m\.)\s*(?P<locations>[a-z0-9&,\s\.]*)\n")
     let re: Regex = Regex::new(r"(?mi)^(?P<region>[a-z\s]*\sregion)?\s*((parts\sof)?\b(?P<county>[a-z\s]*\scounty\b))?\s*(\barea:?)\s\b(?P<area>[a-z\s,\.]*)(\bdate:?)\s\b(?P<day>[a-z]*)\b\s*(?P<date>[\d\.]*)\b\s(\btime:?)\s\b(?P<start>[\d\.]*)\b\s\b(?P<start_period>[ap]\.m\.)\s*[-~—]\s*\b(?P<end>[\d\.]*)\s*(?P<end_period>[ap]\.m\.)\s*(?P<locations>[a-z0-9&,\s\.-]*)\n")
         .unwrap();
     let mut interruptions: Vec<Interruption> = Vec::new();
@@ -130,15 +155,15 @@ pub fn parse_text(text: &str) -> Vec<Interruption> {
     interruptions
 }
 
-/// Go through all texts from all the interruption images and return the first date found
-pub fn extract_date(interruption_texts: Vec<String>) -> String {
+/// Parses a vector of texts extracted from the interruption images and return the first date found
+pub fn extract_date(interruption_texts: Vec<String>) -> Option<String> {
     for interruption_text in interruption_texts {
         let interruptions = parse_text(&interruption_text);
         for interruption in interruptions {
             if let Some(date) = interruption.date {
-                return date;
+                return Some(date);
             }
         }
     }
-    "date unavailable".to_string()
+    None
 }
