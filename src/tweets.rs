@@ -2,7 +2,7 @@
 //!
 //! ## Functions
 //!
-//! - `fetch_tweets` - function fetches a users tweets and returns a hashmap of tweets 
+//! - `fetch_tweets` - function fetches a users tweets and returns a hashmap of tweets
 //! and the interruption information extracted from the images attached on them, if any.
 //! - `build_tweet_link` - returns a tweet's URL from a tweet ID and a username
 
@@ -59,7 +59,7 @@ pub async fn fetch_tweets(username: &'static str) -> HashMap<u64, Vec<String>> {
     interruptions
 }
 
-/// This function returns a tweet's URL from a tweet ID and a username. 
+/// This function returns a tweet's URL from a tweet ID and a username.
 ///
 /// The URL is embedded within the outgoing notifications.
 pub fn build_tweet_link(id: u64, username: &'static str) -> String {
