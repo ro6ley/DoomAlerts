@@ -20,12 +20,12 @@ use std::fmt::{Display, Formatter, Result};
 ///
 /// ## Fields
 ///
-///* `region`
-///* `county`
-///* `area`
-///* `start_time`
-///* `end_time`
-///* `locations`
+///* `region` - e.g. Nyanza, Coast
+///* `county` - e.g. Machako County, Mombasa County
+///* `area` - e.g. Kitengela, Bamburi
+///* `start_time`- e.g. 9.00 A.M.
+///* `end_time` - e.g. 2.00 P.M.
+///* `locations` - e.g. Parts of Eastern Bypass, Ruai Tuskys Supermarket, Triple O Hotel, Bakri Petrol Stn
 ///
 #[derive(Debug, Default)]
 pub struct Interruption {

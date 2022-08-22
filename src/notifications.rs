@@ -1,3 +1,12 @@
+//! Functions for handling notifications
+//!
+//! ...
+//!
+//! ## Functions
+//!
+//! - `send_email`
+//! - `build_email_body`
+
 use lettre::{
     message::{header, MultiPart, SinglePart},
     transport::smtp::authentication::Credentials,

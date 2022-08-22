@@ -1,4 +1,10 @@
-//! This module handles the interaction between DoomAlerts and Twitter.
+//! Functions for working with tweets.
+//!
+//! ## Functions
+//!
+//! - `fetch_tweets` - function fetches a users tweets and returns a hashmap of tweets 
+//! and the interruption information extracted from the images attached on them, if any.
+//! - `build_tweet_link` - returns a tweet's URL from a tweet ID and a username
 
 use std::{borrow::Cow::Borrowed, collections::HashMap, env};
 
@@ -53,7 +59,9 @@ pub async fn fetch_tweets(username: &'static str) -> HashMap<u64, Vec<String>> {
     interruptions
 }
 
-/// Given a tweet ID and a username, build the tweet URL to embed in the notifications
+/// This function returns a tweet's URL from a tweet ID and a username. 
+///
+/// The URL is embedded within the outgoing notifications.
 pub fn build_tweet_link(id: u64, username: &'static str) -> String {
     format!("twitter.com/{username}/status/{id}")
 }

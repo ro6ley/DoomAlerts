@@ -1,10 +1,17 @@
-//! Search mod
+//! Functions for searching through interruption information.
+//!
+//! An in memory search index is built using [`tantivy`](https://docs.rs/tantivy/latest/tantivy/)
+//!
+//! ## Functions
+//!
+//! - `build_index` (private) - build an in-memory index containing all text extracted from images
+//! - `search` - search for the locations in the extracted text and return a boolean indicating inclusion
 
 use tantivy::{
     collector::TopDocs, doc, query::QueryParser, schema::*, Index, IndexWriter, ReloadPolicy,
 };
 
-/// Perform search
+/// Search for the locations in the extracted text and return a boolean indicating inclusion
 pub fn search(full_texts: Vec<String>, locations: String) -> tantivy::Result<bool> {
     // abc,xyz -> "abc" OR "xyz"
     let formatted_locations: String = locations
@@ -33,7 +40,7 @@ pub fn search(full_texts: Vec<String>, locations: String) -> tantivy::Result<boo
     Ok(!top_docs.is_empty())
 }
 
-/// Build search index
+/// Build an in-memory search index containing all text extracted from images
 fn build_index(full_texts: Vec<String>) -> tantivy::Result<(Index, Schema)> {
     let mut schema_builder: SchemaBuilder = Schema::builder();
     schema_builder.add_text_field("text", TEXT | STORED);
