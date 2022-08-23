@@ -7,6 +7,8 @@
 //! - `build_index` (private) - build an in-memory index containing all text extracted from images
 //! - `search` - search for the locations in the extracted text and return a boolean indicating inclusion
 
+use log::info;
+
 use tantivy::{
     collector::TopDocs, doc, query::QueryParser, schema::*, Index, IndexWriter, ReloadPolicy,
 };
@@ -20,10 +22,12 @@ pub fn search(full_texts: Vec<String>, locations: String) -> tantivy::Result<boo
         .collect::<Vec<String>>()
         .join(" OR ");
 
-    println!("Searching for {} ...", formatted_locations);
+    info!("Searching for {} ...", formatted_locations);
 
     let (index, schema) = build_index(full_texts)?;
-    let text = schema.get_field("text").unwrap();
+    let text = schema
+        .get_field("text")
+        .expect("Error getting text field from schema");
 
     let reader = index
         .reader_builder()
@@ -46,7 +50,9 @@ fn build_index(full_texts: Vec<String>) -> tantivy::Result<(Index, Schema)> {
     schema_builder.add_text_field("text", TEXT | STORED);
 
     let schema: Schema = schema_builder.build();
-    let text: Field = schema.get_field("text").unwrap();
+    let text: Field = schema
+        .get_field("text")
+        .expect("Error getting text field from schema");
 
     // build index
     let index: Index = Index::create_in_ram(schema.clone());
@@ -58,7 +64,7 @@ fn build_index(full_texts: Vec<String>) -> tantivy::Result<(Index, Schema)> {
             .add_document(doc!(
                 text => &**t
             ))
-            .unwrap();
+            .expect("Error adding document to index");
     });
     index_writer.commit()?;
 

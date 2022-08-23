@@ -1,7 +1,10 @@
+use log::{error, info};
 use std::{collections::HashMap, env};
 
 #[tokio::main]
 async fn main() {
+    env_logger::init();
+
     let watchlist: String = env::var("WATCHLIST").expect("$WATCHLIST env var is not set");
 
     let interruptions: HashMap<u64, Vec<String>> =
@@ -16,12 +19,13 @@ async fn main() {
                 .unwrap_or(false);
 
         if affected {
+            info!("One or more areas in watchlist will be affected by a scheduled power supply interruption. Sending interruption information via email... ");
             let tweet_link: String = doom_alerts::tweets::build_tweet_link(*id, "KenyaPower_Care");
 
             // TODO: send email once
             match doom_alerts::notifications::send_email(interruption_date, tweet_link).await {
-                Ok(msg) => println!("{msg}"),
-                _ => println!("ERROR: Email not sent!"),
+                Ok(msg) => info!("{msg}"),
+                _ => error!("Email not sent!"),
             };
         }
     }

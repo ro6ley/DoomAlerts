@@ -100,7 +100,7 @@ impl Interruption {
 /// The extracted information makes up the fields on the `Interruption` struct.
 pub fn parse_text(text: &str) -> Vec<Interruption> {
     let re: Regex = Regex::new(r"(?mi)^(?P<region>[a-z\s]*\sregion)?\s*((parts\sof)?\b(?P<county>[a-z\s]*\scounty\b))?\s*(\barea:?)\s\b(?P<area>[a-z\s,\.]*)(\bdate:?)\s\b(?P<day>[a-z]*)\b\s*(?P<date>[\d\.]*)\b\s(\btime:?)\s\b(?P<start>[\d\.]*)\b\s\b(?P<start_period>[ap]\.m\.)\s*[-~—]\s*\b(?P<end>[\d\.]*)\s*(?P<end_period>[ap]\.m\.)\s*(?P<locations>[a-z0-9&,\s\.-]*)\n")
-        .unwrap();
+        .expect("Error compiling regex");
     let mut interruptions: Vec<Interruption> = Vec::new();
 
     for captures in re.captures_iter(text) {

@@ -1,7 +1,5 @@
 //! Functions for handling notifications
 //!
-//! ...
-//!
 //! ## Functions
 //!
 //! - `send_email`
