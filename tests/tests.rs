@@ -4,20 +4,20 @@ mod tests {
 
     #[test]
     fn test_text_extracted() {
-        let img_text = doom_alerts::utils::extract_from_path(TEST_IMAGE);
+        let img_text = doom_alerts::utils::extract_from_path(TEST_IMAGE).unwrap();
         assert!(img_text.starts_with("AREA: WHOLE OF UTAWALAFEEDER"))
     }
 
     #[test]
     fn test_regex_extraction() {
-        let img_text = doom_alerts::utils::extract_from_path(TEST_IMAGE);
+        let img_text = doom_alerts::utils::extract_from_path(TEST_IMAGE).unwrap();
         let interruptions = doom_alerts::interruption::parse_text(&img_text);
         assert_eq!(interruptions.len(), 3);
     }
 
     #[test]
     fn test_location_in_text() {
-        let img_text = doom_alerts::utils::extract_from_path(TEST_IMAGE);
+        let img_text = doom_alerts::utils::extract_from_path(TEST_IMAGE).unwrap();
         let first_interruption = &doom_alerts::interruption::parse_text(&img_text)[0];
 
         assert!(first_interruption.affects_location("Parts of Eastern Bypass"));
@@ -31,7 +31,7 @@ mod tests {
         let mut interruption_texts: Vec<String> = Vec::new();
 
         for p in image_paths {
-            interruption_texts.push(doom_alerts::utils::extract_from_path(p));
+            interruption_texts.push(doom_alerts::utils::extract_from_path(p).unwrap());
         }
 
         let affected = doom_alerts::search::search(interruption_texts, locations).unwrap();
@@ -46,7 +46,7 @@ mod tests {
         let mut interruption_texts: Vec<String> = Vec::new();
 
         for p in image_paths {
-            interruption_texts.push(doom_alerts::utils::extract_from_path(p));
+            interruption_texts.push(doom_alerts::utils::extract_from_path(p).unwrap());
         }
 
         let affected = doom_alerts::search::search(interruption_texts, locations).unwrap();
