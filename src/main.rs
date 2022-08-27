@@ -25,7 +25,7 @@ async fn main() {
             // TODO: send email once
             match doom_alerts::notifications::send_email(interruption_date, tweet_link).await {
                 Ok(msg) => info!("{msg}"),
-                _ => error!("Email not sent!"),
+                _ => error!("Email was not sent."),
             };
         }
     }

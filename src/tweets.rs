@@ -16,7 +16,7 @@ use egg_mode::{auth, tweet::user_timeline, tweet::Timeline, user::UserID, KeyPai
 /// It returns a hashmap with the tweet ID as the key
 /// and the value is a vector containing the texts extracted from the images attached to the tweet
 pub async fn fetch_tweets(username: &'static str) -> HashMap<u64, Vec<String>> {
-    info!("\nFetching {}'s latest tweets... ", username);
+    info!("Fetching {}'s latest tweets... ", username);
 
     let api_key: String = env::var("API_KEY").expect("$API_KEY env var is not set");
     let api_key_secret: String =
