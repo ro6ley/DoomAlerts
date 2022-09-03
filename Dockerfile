@@ -10,4 +10,4 @@ COPY . .
 
 RUN cargo install --path .
 
-CMD ["doom_alerts", "&"]
+CMD ["doom_alerts"]
