@@ -4,7 +4,7 @@ FROM rust:latest
 RUN apt-get update && \
     apt-get install -y libleptonica-dev libtesseract-dev clang tesseract-ocr-eng
 
-WORKDIR /usr/src/doom_alerts
+WORKDIR /app
 
 COPY . .
 
