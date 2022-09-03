@@ -63,6 +63,7 @@ The following environment variables are needed to be set when running the bot:
 * `EMAIL_PASSWORD`
 * `EMAIL_SMTP_HOST`
 * `EMAIL_RECIPIENT`
+* `INTERVAL` - fetch tweets every `INTERVAL` seconds
 
 
 ### Local Development
@@ -78,10 +79,15 @@ The following environment variables are needed to be set when running the bot:
   $ cp .env.example .env
   ```
 
-* start the application:
+* build:
+  ```bash
+  $ cargo install --path .
+  ```
+
+* start the application and run it in the background:
   ```bash
   $ source .env
-  $ cargo run
+  $ doom_alerts &
   ```
 
 * run tests:
@@ -96,16 +102,16 @@ To view the project's documentation run:
 $ cargo doc --no-deps --open
 ```
 
-### Running in Docker
+### Docker
 
-* WIP
+To run DoomAlerts using Docker:
 
-### Production Deployment
+* Build the image:
+  ```bash
+  $ docker build -t doom_alerts .
+  ```
 
-* WIP
-
-## Authors
-
-* **[Robley Gori](https://github.com/ro6ley)** - *Initial work*
-
-See also the list of [contributors](https://github.com/ro6ley/DoomAlerts/contributors) who participated in this project.
+* Run it:
+  ```bash
+  $ docker run --env-file .env doom_alerts
+  ```
