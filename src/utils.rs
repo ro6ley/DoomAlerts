@@ -7,7 +7,6 @@
 //! - `extract_from_path`- extract text from an image located at the provided path
 
 use log::info;
-// use std::path::Path;
 
 use leptess::LepTess;
 
@@ -52,7 +51,7 @@ mod tests {
     fn test_regex_extraction() {
         let img_text = extract_from_path(TEST_IMAGE).unwrap();
         let interruptions = crate::interruption::parse_text(&img_text);
-        assert_eq!(interruptions.len(), 4);
+        assert_eq!(interruptions.len(), 3);
     }
 
     #[test]
