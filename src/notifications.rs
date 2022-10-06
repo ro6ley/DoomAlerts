@@ -55,7 +55,7 @@ pub async fn send_email(
 
     mailer.send(email).await?;
 
-    Ok("SUCCESS: Email sent!")
+    Ok("Email sent successfully!")
 }
 
 /// This function appends the tweet link to the email body and returns a tuple of the text and html versions.

@@ -7,6 +7,7 @@
 //! - `extract_from_path`- extract text from an image located at the provided path
 
 use log::info;
+// use std::path::Path;
 
 use leptess::LepTess;
 
@@ -33,4 +34,32 @@ pub fn extract_from_path(location: &str) -> Option<String> {
         .expect("Error setting image to use for OCR");
 
     lt.get_utf8_text().ok()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const TEST_IMAGE: &str = "./images/test_2.png";
+
+    #[test]
+    fn test_text_extracted() {
+        let img_text = extract_from_path(TEST_IMAGE).unwrap();
+        assert!(img_text.starts_with("AREA: WHOLE OF UTAWALAFEEDER"))
+    }
+
+    #[test]
+    fn test_regex_extraction() {
+        let img_text = extract_from_path(TEST_IMAGE).unwrap();
+        let interruptions = crate::interruption::parse_text(&img_text);
+        assert_eq!(interruptions.len(), 4);
+    }
+
+    #[test]
+    fn test_location_in_text() {
+        let img_text = extract_from_path(TEST_IMAGE).unwrap();
+        let first_interruption = &crate::interruption::parse_text(&img_text)[0];
+
+        assert!(first_interruption.affects_location("Parts of Eastern Bypass"));
+    }
 }

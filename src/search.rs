@@ -70,3 +70,38 @@ fn build_index(full_texts: Vec<String>) -> tantivy::Result<(Index, Schema)> {
 
     Ok((index, schema))
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_search() {
+        let image_paths: Vec<&str> = vec!["./images/test_6.png", "./images/test_2.png"];
+        let locations: String = String::from("Nyangweso,Bogani,Mwalimu Motors");
+
+        let mut interruption_texts: Vec<String> = Vec::new();
+
+        for p in image_paths {
+            interruption_texts.push(crate::utils::extract_from_path(p).unwrap());
+        }
+
+        let affected = search(interruption_texts, locations).unwrap();
+        assert_eq!(affected, true);
+    }
+
+    #[test]
+    fn test_failing_search() {
+        let image_paths: Vec<&str> = vec!["./images/test_6.png", "./images/test_2.png"];
+        let locations: String = String::from("Turkana,Marsabit County");
+
+        let mut interruption_texts: Vec<String> = Vec::new();
+
+        for p in image_paths {
+            interruption_texts.push(crate::utils::extract_from_path(p).unwrap());
+        }
+
+        let affected = search(interruption_texts, locations).unwrap();
+        assert_eq!(affected, false);
+    }
+}
