@@ -70,36 +70,36 @@ The following environment variables are needed to be set when running the bot:
 
 * clone the repo:
   ```bash
-  $ git clone https://github.com/ro6ley/DoomAlerts.git
-  $ cd DoomAlerts
+  git clone https://github.com/ro6ley/DoomAlerts.git
+  cd DoomAlerts
   ```
 
 * create the `.env` file and fill in the required details:
   ```bash
-  $ cp .env.example .env
+  cp .env.example .env
   ```
 
 * build:
   ```bash
-  $ cargo install --path .
+  cargo install --path .
   ```
 
 * start the application and run it in the background:
   ```bash
-  $ source .env
-  $ doom_alerts &
+  source .env
+  doom_alerts &
   ```
 
 * run tests:
   ```bash
-  $ cargo test
+  cargo test
   ```
 
 ## Documentation
 
 To view the project's documentation run:
 ```bash
-$ cargo doc --no-deps --open
+cargo doc --no-deps --open
 ```
 
 ### Docker
@@ -108,10 +108,10 @@ To run DoomAlerts using Docker:
 
 * Build the image:
   ```bash
-  $ docker build -t doom_alerts .
+  docker build -t doom_alerts .
   ```
 
 * Run it:
   ```bash
-  $ docker run --env-file .env doom_alerts
+  docker run --env-file .env doom_alerts
   ```
