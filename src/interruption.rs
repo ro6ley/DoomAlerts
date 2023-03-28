@@ -13,8 +13,15 @@
 //! - `parse_text` - uses regex to extract interruption information from the text extracted from notice images.
 //! - `extract_date` - parses a vector of texts extracted from the interruption images and return the first date found
 
+use lazy_static::lazy_static;
 use regex::Regex;
 use std::fmt::{Display, Formatter, Result};
+
+
+lazy_static! {
+    static ref INTERRUPTION_RE: Regex = Regex::new(r"(?mi)^(?P<region>[a-z\s]*\sregion)?\s*((parts\sof)?\b(?P<county>[a-z\s]*\scounty\b))?\s*(\barea:?)\s\b(?P<area>[a-z\s,\.]*)(\bdate:?)\s\b(?P<day>[a-z]*)\b\s*(?P<date>[\d\.]*)\b\s(\btime:?)\s\b(?P<start>[\d\.]*)\b\s\b(?P<start_period>[ap]\.m\.)\s*[-~—]\s*\b(?P<end>[\d\.]*)\s*(?P<end_period>[ap]\.m\.)\s*(?P<locations>[a-z0-9&,\s\.-]*)\n")
+    .expect("Error compiling regex");
+}
 
 /// Represents the interruption details for an area.
 ///
@@ -99,11 +106,9 @@ impl Interruption {
 ///
 /// The extracted information makes up the fields on the `Interruption` struct.
 pub fn parse_text(text: &str) -> Vec<Interruption> {
-    let re: Regex = Regex::new(r"(?mi)^(?P<region>[a-z\s]*\sregion)?\s*((parts\sof)?\b(?P<county>[a-z\s]*\scounty\b))?\s*(\barea:?)\s\b(?P<area>[a-z\s,\.]*)(\bdate:?)\s\b(?P<day>[a-z]*)\b\s*(?P<date>[\d\.]*)\b\s(\btime:?)\s\b(?P<start>[\d\.]*)\b\s\b(?P<start_period>[ap]\.m\.)\s*[-~—]\s*\b(?P<end>[\d\.]*)\s*(?P<end_period>[ap]\.m\.)\s*(?P<locations>[a-z0-9&,\s\.-]*)\n")
-        .expect("Error compiling regex");
     let mut interruptions: Vec<Interruption> = Vec::new();
 
-    for captures in re.captures_iter(text) {
+    for captures in INTERRUPTION_RE.captures_iter(text) {
         let mut interruption = Interruption::default();
 
         if let Some(n) = captures.name("region") {
