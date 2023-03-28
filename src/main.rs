@@ -3,7 +3,7 @@ use std::{collections::HashMap, env};
 use tokio::time::Duration;
 
 #[tokio::main]
-async fn main() {
+async fn main() -> ! {
     env_logger::init();
 
     let watchlist: String = env::var("WATCHLIST").expect("$WATCHLIST env var is not set");

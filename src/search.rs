@@ -18,7 +18,7 @@ pub fn search(full_texts: Vec<String>, locations: String) -> tantivy::Result<boo
     // abc,xyz -> "abc" OR "xyz"
     let formatted_locations: String = locations
         .split(',')
-        .map(|s| format!("\"{}\"", s))
+        .map(|s| format!("\"{s}\""))
         .collect::<Vec<String>>()
         .join(" OR ");
 
