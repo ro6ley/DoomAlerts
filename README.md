@@ -49,7 +49,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 - Rust
 - Tesseract
-- [Leptess v0.13.2](https://github.com/houqp/leptess)
+- [Leptess v0.13.2](https://github.com/houqp/leptess) - [_dependencies installation instructions_](https://lib.rs/crates/leptess)
 - [Tantivy](https://github.com/quickwit-oss/tantivy)
 
 ### Environment Variables
