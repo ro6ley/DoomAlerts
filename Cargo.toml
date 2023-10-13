@@ -10,10 +10,10 @@ edition = "2021"
 leptess = "0.14.0"
 egg-mode = "0.16"
 tokio = { version = "1", features = ["full"] }
-reqwest = "0.11.11"
+reqwest = { version = "0.11.16", features = ["blocking"] }
 image = "0.24.3"
 regex = "1.6.0"
-tantivy = "0.18.0"
+tantivy = "0.21.0"
 lettre = { version = "0.10.0-beta.2", default-features = false, features = ["smtp-transport", "tokio1-rustls-tls", "hostname", "r2d2", "builder"] }
 env_logger = "0.9.0"
 log = "0.4.17"
