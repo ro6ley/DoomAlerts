@@ -3,7 +3,7 @@
 //! ## Functions
 //!
 //! - `fetch_tweets` - function fetches a users tweets and returns a hashmap of tweets
-//! and the interruption information extracted from the images attached on them, if any.
+//!   and the interruption information extracted from the images attached on them, if any.
 //! - `build_tweet_link` - returns a tweet's URL from a tweet ID and a username
 
 use log::info;

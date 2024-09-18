@@ -31,7 +31,7 @@ pub fn search(full_texts: Vec<String>, locations: String) -> tantivy::Result<boo
 
     let reader = index
         .reader_builder()
-        .reload_policy(ReloadPolicy::OnCommit)
+        .reload_policy(ReloadPolicy::OnCommitWithDelay)
         .try_into()?;
 
     let searcher = reader.searcher();
@@ -56,7 +56,7 @@ fn build_index(full_texts: Vec<String>) -> tantivy::Result<(Index, Schema)> {
 
     // build index
     let index: Index = Index::create_in_ram(schema.clone());
-    let mut index_writer: IndexWriter = index.writer(10_000_000)?;
+    let mut index_writer: IndexWriter = index.writer(15_000_000)?;
 
     // populate the index
     full_texts.iter().for_each(|t: &String| {
